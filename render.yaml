@@ -1,11 +1,12 @@
 services:
   - type: web
-    name: strapi-production
+    name: dope-devs-strapi-production
     env: node
     plan: starter
     buildCommand: yarn install && yarn build
     startCommand: yarn start
     healthCheckPath: /_health
+    region: frankfurt
     envVars:
       - key: NODE_VERSION
         value: 12.18.4
@@ -19,19 +20,20 @@ services:
         sync: false
       - key: DATABASE_URL
         fromDatabase:
-          name: strapi
+          name: dope-devs-database-production
           property: connectionString
       - key: JWT_SECRET
         generateValue: true
       - key: ADMIN_JWT_SECRET
         generateValue: true
   - type: web
-    name: strapi-staging
+    name: dope-devs-strapi-staging
     env: node
     plan: starter
     buildCommand: yarn install && yarn build
     startCommand: yarn start
     healthCheckPath: /_health
+    region: frankfurt
     envVars:
       - key: NODE_VERSION
         value: 12.18.4
@@ -45,7 +47,7 @@ services:
         sync: false
       - key: DATABASE_URL
         fromDatabase:
-          name: strapi
+          name: dope-devs-database-staging
           property: connectionString
       - key: JWT_SECRET
         generateValue: true
@@ -53,7 +55,9 @@ services:
         generateValue: true
 
 databases:
-  - name: strapi-production
+  - name: dope-devs-database-production
     plan: starter
-  - name: strapi-staging
+    region: frankfurt
+  - name: dope-devs-database-staging
     plan: starter
+    region: frankfurt
